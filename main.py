@@ -46,7 +46,7 @@ def add_book():
     except Exception as e:
         print(e)
     if choose_to_stop == 'exit':
-                
+        pass
     book = {
         'id':id,
         'title':title,
