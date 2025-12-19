@@ -97,7 +97,7 @@ def display_books():
     for i in data:
         print(i['id'], ' ',i['title'], ' ',i['author'], ' ',i['genre'],  ' ',i['year'],  ' ',i['price'], ' ',i['is_available'])
         total += i['price']
-    print(f'Total price of all books: ${total}')
+    print(f'\nTotal price of all books: ${total}')
     return data
     
 
@@ -114,6 +114,10 @@ def borrow():
             if i['is_available'] == 'Yes':
                 i['is_available'] = 'No'
                 print("Book has been borrowed")
+                
+                with open('library.json', 'w') as file:
+                    json.dump(data, file, indent=4)
+                    
             else:
                 print("Book has already been borrowed")
             break
@@ -132,6 +136,9 @@ def return_book():
             if i['is_available'] == 'No':
                 i['is_available'] = 'Yes'
                 print("Book has been returned")
+                
+                with open('library.json', 'w') as file:
+                    json.dump(data, file, indent=4)
             else:
                 print("Book has already been returned")
             break
@@ -161,7 +168,7 @@ def main_menu():
         print('2. Display books')
         print('3. Borrow a book')
         print('4. Return a book')
-        print('5. Filter by category')
+        print('5. Filter by genre')
         print('6. Delete a book')
         print('7. Exit')
         try:

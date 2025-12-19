@@ -1,11 +1,20 @@
 [
     {
-        "id": 4141,
-        "title": "agagag",
-        "author": "Gat Agag",
-        "genre": "Fan",
+        "id": 123,
+        "title": "Happy",
+        "author": "John Smith",
+        "genre": "Fantasy",
         "year": 2012,
-        "price": 4312.321,
+        "price": 25.25,
+        "is_available": "Yes"
+    },
+    {
+        "id": 555,
+        "title": "sad",
+        "author": "Bob Smith",
+        "genre": "Documentary",
+        "year": 2001,
+        "price": 54.2,
         "is_available": "Yes"
     }
 ]
