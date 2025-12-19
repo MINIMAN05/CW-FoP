@@ -67,7 +67,7 @@ def add_book():
             break
 
 def delete_book():
-    data = load_base()
+    data = display_books()
     new_data = []
     if data == []:
         print("There is no books to delete")
@@ -165,7 +165,7 @@ def main_menu():
         print('6. Delete a book')
         print('7. Exit')
         try:
-            option = int(input("Enter a option (1-6) "))
+            option = int(input("Enter a option (1-7) "))
         except:
             print("Invalid input")
             continue
