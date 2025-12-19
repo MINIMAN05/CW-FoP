@@ -1,3 +1,6 @@
+import os
+
+
 books = []
 
 def add_book():
@@ -47,14 +50,16 @@ def add_book():
 
 
 
-    main_menu()
-
 def display_books():
+    if books == []:
+        print("There is no books to display")
+        return
+        
     print("Id", 3*' ',"Title", 3*' ',"Author", 3*' ',"Genre", 3*' ',"Year", 3*' ',"Price", 3*' ',"is_available", 3*' ')
     for i in books:
         print(i['id'], ' ',i['title'], ' ',i['author'], ' ',i['genre'],  ' ',i['year'], ' ',i['is_available'])
 
-    # main_menu()
+
     
 def borrow():
     display_books()
@@ -73,19 +78,50 @@ def borrow():
             break
     else:
         print("Book with this ID has not been found")
-            
         
+def return_book():
+    display_books()
+        
+    try:
+        return_id = int(input("Print ID of book that you want to return: "))
+    except Exception as e:
+        print(e)
+    for i in books:
+        if i['id'] == return_id:
+            if i['is_available'] == 'No':
+                i['is_available'] = 'Yes'
+                print("Book has been returned")
+            else:
+                print("Book has already been returned")
+            break
+    else:
+        print("Book with this ID has not been found")
+            
+
+def filter():
+    genre_filter = input("Enter a category that you want filter by: ").capitalize()
+    for i in books:
+        if i['genre'] == genre_filter:
+            print("Id", 3*' ',"Title", 3*' ',"Author", 3*' ',"Genre", 3*' ',"Year", 3*' ',"Price", 3*' ',"is_available", 3*' ')
+            
+            print(i['id'], ' ',i['title'], ' ',i['author'], ' ',i['genre'],  ' ',i['year'], ' ',i['is_available'])
+            found = True
+    if not found:
+        print(f"Books that are in {genre_filter} genre were not found")
+            
 
 
 def main_menu():
-    while True:    
+    while True:
         print(30*'-', "MAIN MENU", 30*'-')
-        print('1. Add books')
+        print('1. Display books')
         print('2. Show books')
         print('3. Borrow a book')
-        print('4. Exit')
+        print('4. Return a book')
+        print('5. Filter by category')
+        print('6. Exit')
         try:
-            option = int(input("Enter a option (1-5) "))
+            option = int(input("Enter a option (1-6) "))
         except:
             print("Invalid input")
             continue
@@ -96,6 +132,10 @@ def main_menu():
         elif option == 3:
             borrow()
         elif option == 4:
+            return_book()
+        elif option == 5:
+            filter()
+        elif option == 6:
             break
             
             
@@ -104,3 +144,11 @@ def main_menu():
             
 main_menu()
 
+
+
+
+
+# list = [{'a':1, 'c':3}, {'b':2}]
+# for i in list:
+#     for key,val in i.items():
+#         print(key, val)
