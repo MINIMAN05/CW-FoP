@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "title": "agaga",
+        "author": " Gaagag Agag",
+        "genre": "Fam",
+        "year": 2000,
+        "price": 12.12,
+        "is_available": "Yes"
+    },
+    {
+        "id": 4141,
+        "title": "agagag",
+        "author": "Gat Agag",
+        "genre": "Fan",
+        "year": 2012,
+        "price": 4312.321,
+        "is_available": "Yes"
+    }
+]

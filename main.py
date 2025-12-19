@@ -1,7 +1,18 @@
 import os
-
+import json
 
 books = []
+
+def load_base():
+    if not os.path.exists('library.json'):
+        with open('library.json', 'w') as file:
+            json.dump([], file)
+    with open('library.json', 'r') as file:
+        data = json.load(file)
+    return data
+
+
+
 
 def add_book():
     while True:
@@ -9,7 +20,7 @@ def add_book():
             id = int(input("Enter ID of the book: "))
         except Exception as e:
             print(e)
-            return # return 
+            return 
 
         title = input("Enter title of the book: ")
 
@@ -19,27 +30,34 @@ def add_book():
             
         try:
             year = int(input("Enter published year of the book: "))
-            
         except Exception as e:
             print(e)
             return
             
                 
-        # try:
-        #     price = float(input("Enter price of the book: "))
+        try:
+            price = float(input("Enter price of the book: "))
             
         except Exception as e:
             print(e)
             return
+        
         book = {
             'id':id,
             'title':title,
             'author':author,
             'genre':genre,
             'year':year,
+            'price':price,
             'is_available': 'Yes'
             }
-        books.append(book)
+        
+        data = load_base()
+        
+        data.append(book)
+        
+        with open('library.json', 'w') as file:
+            json.dump(data, file, indent=4)
             
         
  
@@ -48,27 +66,50 @@ def add_book():
         if choose_to_stop == 'exit':
             break
 
-
+def delete_book():
+    data = load_base()
+    new_data = []
+    if data == []:
+        print("There is no books to delete")
+        return
+    try:
+        delete_id = int(input("Print ID of book that you want to delete: "))
+    except Exception as e:
+        print(e)
+        
+    for i in data:
+        if i['id'] != delete_id:
+            new_data.append(i)
+    with open('library.json', 'w') as file:
+        json.dump(new_data, file, indent=4)
+        
+            
+    
 
 def display_books():
-    if books == []:
+    data = load_base()
+    total = 0
+    if data == []:
         print("There is no books to display")
         return
         
     print("Id", 3*' ',"Title", 3*' ',"Author", 3*' ',"Genre", 3*' ',"Year", 3*' ',"Price", 3*' ',"is_available", 3*' ')
-    for i in books:
-        print(i['id'], ' ',i['title'], ' ',i['author'], ' ',i['genre'],  ' ',i['year'], ' ',i['is_available'])
-
+    for i in data:
+        print(i['id'], ' ',i['title'], ' ',i['author'], ' ',i['genre'],  ' ',i['year'],  ' ',i['price'], ' ',i['is_available'])
+        total += i['price']
+    print(f'Total price of all books: ${total}')
+    return data
+    
 
     
 def borrow():
-    display_books()
-        
+    data = display_books()
+    
     try:
         borrow_id = int(input("Print ID of book that you want to borrow: "))
     except Exception as e:
         print(e)
-    for i in books:
+    for i in data:
         if i['id'] == borrow_id:
             if i['is_available'] == 'Yes':
                 i['is_available'] = 'No'
@@ -80,13 +121,13 @@ def borrow():
         print("Book with this ID has not been found")
         
 def return_book():
-    display_books()
+    data = display_books()
         
     try:
         return_id = int(input("Print ID of book that you want to return: "))
     except Exception as e:
         print(e)
-    for i in books:
+    for i in data:
         if i['id'] == return_id:
             if i['is_available'] == 'No':
                 i['is_available'] = 'Yes'
@@ -99,8 +140,10 @@ def return_book():
             
 
 def filter():
+    data = load_base()
+    found = False
     genre_filter = input("Enter a category that you want filter by: ").capitalize()
-    for i in books:
+    for i in data:
         if i['genre'] == genre_filter:
             print("Id", 3*' ',"Title", 3*' ',"Author", 3*' ',"Genre", 3*' ',"Year", 3*' ',"Price", 3*' ',"is_available", 3*' ')
             
@@ -114,12 +157,13 @@ def filter():
 def main_menu():
     while True:
         print(30*'-', "MAIN MENU", 30*'-')
-        print('1. Display books')
-        print('2. Show books')
+        print('1. Add books')
+        print('2. Display books')
         print('3. Borrow a book')
         print('4. Return a book')
         print('5. Filter by category')
-        print('6. Exit')
+        print('6. Delete a book')
+        print('7. Exit')
         try:
             option = int(input("Enter a option (1-6) "))
         except:
@@ -136,6 +180,8 @@ def main_menu():
         elif option == 5:
             filter()
         elif option == 6:
+            delete_book()
+        elif option == 7:
             break
             
             
